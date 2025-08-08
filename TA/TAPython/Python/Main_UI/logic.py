@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import unreal
 import json
 import os
@@ -7,25 +6,23 @@ import re
 import threading
 import uuid
 import websocket
+import requests 
+import random
+import hashlib
 from urllib import request, parse, error
 import shutil
 import tkinter as tk
 from tkinter import filedialog
 
-# 【新增】导入用于调用百度翻译API的库
-import requests 
-import random
-import hashlib
-
 # --- 配置区 ---
 SERVER_ADDRESS = "127.0.0.1:8188"
-COMFYUI_INPUT_PATH = "D:\\03_Projects\AI_Camera\ComfyUI\input" # 请务必修改这里
+COMFYUI_INPUT_PATH = "D:\\03_Projects\AI_Camera\ComfyUI\input" 
 
-# --- 【请在这里填写您的百度翻译API密钥】 ---
-BAIDU_APP_ID = "20241107002196612"    # 替换成您的 APP ID
+# --- 百度翻译API密钥 ---
+BAIDU_APP_ID = "20241107002196612"        # 替换成您的 APP ID
 BAIDU_SECRET_KEY = "wQp4jbG_Bpwl6yiObLLj" # 替换成您的密钥
 
-# --- 文件与节点配置 ---
+# --- 工作流文件与节点配置 ---
 WORKFLOW_DEFAULT = "AI_Camera.json"
 WORKFLOW_CANNY = "flux_canny_model_example.json"
 NODE_ID_DEFAULT_PROMPT = "48"
@@ -90,13 +87,11 @@ class ShotGenerator:
         with request.urlopen(f"http://{SERVER_ADDRESS}/history/{prompt_id}") as response:
             return json.loads(response.read())
             
-    # --- 【已修改】翻译功能 ---
+    # --- 翻译功能 ---
     def _translate_if_needed(self, text):
         """如果检测到中文字符，则调用百度翻译API翻译成英文"""
         if not re.search(r'[\u4e00-\u9fa5]', text):
             return text
-
-        unreal.log(f"检测到中文输入，正在使用百度翻译: '{text}'")
 
         if BAIDU_APP_ID == "YOUR_BAIDU_APP_ID" or BAIDU_SECRET_KEY == "YOUR_BAIDU_SECRET_KEY":
             unreal.log_warning("百度翻译API密钥未配置，将使用原文。")
@@ -126,7 +121,6 @@ class ShotGenerator:
             
             if 'trans_result' in result:
                 translated_text = result['trans_result'][0]['dst']
-                unreal.log(f"翻译结果: '{translated_text}'")
                 return translated_text
             else:
                 error_msg = result.get('error_msg', '未知错误')
@@ -183,7 +177,7 @@ class ShotGenerator:
             
             style_prompt = " The scene is evenly lit under a bright overcast sky, showing clear details on all surfaces. Clean, minimalist composition.Architectural style photograph."
             full_prompt = f"{translated_prompt}.{style_prompt}"
-            unreal.log(f"最终生成的完整提示词: {full_prompt}")
+            unreal.log(f"提示词: {full_prompt}")
 
             if self.edge_image_path:
                 if not os.path.exists(self.edge_image_path):
@@ -268,23 +262,23 @@ class ShotGenerator:
         unreal.PythonBPLib.exec_python_command(command, True)
 
     def _set_generating_state_on_main_thread(self, is_generating):
-        cmd = f"ai_shot_generator.logic.ShotGenerator.get_instance()._set_generating_state({is_generating})"
+        cmd = f"Main_UI.logic.ShotGenerator.get_instance()._set_generating_state({is_generating})"
         self._run_on_main_thread(cmd)
         
     def _update_status_on_main_thread(self, text, is_loading):
-        cmd = f"ai_shot_generator.logic.ShotGenerator.get_instance()._update_status({repr(text)}, {is_loading})"
+        cmd = f"Main_UI.logic.ShotGenerator.get_instance()._update_status({repr(text)}, {is_loading})"
         self._run_on_main_thread(cmd)
 
     def _hide_all_image_slots_on_main_thread(self):
-        cmd = "ai_shot_generator.logic.ShotGenerator.get_instance()._hide_all_image_slots()"
+        cmd = "Main_UI.logic.ShotGenerator.get_instance()._hide_all_image_slots()"
         self._run_on_main_thread(cmd)
 
     def _show_image_in_slot_on_main_thread(self, index, image_path):
-        cmd = f"ai_shot_generator.logic.ShotGenerator.get_instance()._show_image_in_slot({index}, {repr(image_path)})"
+        cmd = f"Main_UI.logic.ShotGenerator.get_instance()._show_image_in_slot({index}, {repr(image_path)})"
         self._run_on_main_thread(cmd)
         
     def _show_canny_result_on_main_thread(self, input_path, output_path):
-        cmd = f"ai_shot_generator.logic.ShotGenerator.get_instance()._show_canny_result({repr(input_path)}, {repr(output_path)})"
+        cmd = f"Main_UI.logic.ShotGenerator.get_instance()._show_canny_result({repr(input_path)}, {repr(output_path)})"
         self._run_on_main_thread(cmd)
 
     def _set_generating_state(self, is_generating):

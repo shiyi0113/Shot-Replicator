@@ -1,11 +1,15 @@
 {
     "TabLabel": "镜头生成工具",
     "InitTabSize": [550, 750],
-    "InitPyCmd": "import ai_shot_generator.logic; import importlib; importlib.reload(ai_shot_generator.logic); generator = ai_shot_generator.logic.ShotGenerator(%JsonPath)",
+    "InitPyCmd": "import Main_UI.logic; import importlib; importlib.reload(Main_UI.logic); generator = Main_UI.logic.ShotGenerator(%JsonPath)",
     "Root": {
         "SVerticalBox": {
             "Slots": [
-                { "AutoHeight": true, "Padding": [2, 5, 2, 5], "SSeparator": { "Thickness": 1 } },
+                { 
+                    "AutoHeight": true, 
+                    "Padding": [2, 5, 2, 5], 
+                    "SSeparator": { "Thickness": 1 } 
+                },
                 {
                     "AutoHeight": true,
                     "Padding": [10, 10, 10, 5],
@@ -58,9 +62,14 @@
                         ]
                     }
                 },
-                { "AutoHeight": true, "Padding": [2, 5, 2, 5], "SSeparator": { "Thickness": 1 } },
+                { 
+                    "AutoHeight": true, 
+                    "Padding": [2, 5, 2, 5], 
+                    "SSeparator": { "Thickness": 1 } 
+                },
                 {
-                    "AutoHeight": true, "Padding": [10, 10, 10, 5],
+                    "AutoHeight": true, 
+                    "Padding": [10, 10, 10, 5],
                     "STextBlock": { "Text": "选择一个镜头并应用", "Font": { "Style": "FEditorStyle", "StyleName": "ContentBrowser.SourceTree.FolderFont" } }
                 },
                 {
