@@ -1,0 +1,122 @@
+{
+    "TabLabel": "镜头生成工具",
+    "InitTabSize": [550, 750],
+    "InitPyCmd": "import ai_shot_generator.logic; import importlib; importlib.reload(ai_shot_generator.logic); generator = ai_shot_generator.logic.ShotGenerator(%JsonPath)",
+    "Root": {
+        "SVerticalBox": {
+            "Slots": [
+                { "AutoHeight": true, "Padding": [2, 5, 2, 5], "SSeparator": { "Thickness": 1 } },
+                {
+                    "AutoHeight": true,
+                    "Padding": [10, 10, 10, 5],
+                    "STextBlock": { "Text": "输入提示词", "Font": { "Style": "FEditorStyle", "StyleName": "ContentBrowser.SourceTree.FolderFont" } }
+                },
+                {
+                    "AutoHeight": true,
+                    "Padding": [10, 0, 10, 10],
+                    "SBox": {
+                        "MinDesiredHeight": 40,
+                        "Content": {
+                            "SMultiLineEditableTextBox": {
+                                "Aka": "prompt_textbox",
+                                "Text": "一个火箭",
+                                "HintText": "请在此处输入详细的镜头描述...",
+                                "AutoWrapText": true
+                            }
+                        }
+                    }
+                },
+                {
+                    "AutoHeight": true,
+                    "Padding": [10, 0, 10, 10],
+                    "SHorizontalBox": {
+                        "Slots": [
+                            {
+                                "AutoWidth": true,
+                                "Padding": [0, 0, 10, 0],
+                                "SButton": { "Text": "导入边缘图片", "OnClick": "generator.import_edge_image()" }
+                            },
+                            {
+                                "VAlign": "Center",
+                                "STextBlock": { "Aka": "edge_image_path_text", "Text": "未导入图片" }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "AutoHeight": true, "Padding": [10, 5, 10, 10],
+                    "SHorizontalBox": {
+                        "Slots": [
+                            {
+                                "FillWidth": 1.0,
+                                "SButton": { "Aka": "generate_button", "Text": "生成参考图", "HAlign": "Center", "OnClick": "generator.generate_images()" }
+                            },
+                            {
+                                "FillWidth": 1.0,
+                                "SButton": { "Aka": "regenerate_button", "Text": "重新生成", "HAlign": "Center", "OnClick": "generator.generate_images()", "Visibility": "Collapsed" }
+                            }
+                        ]
+                    }
+                },
+                { "AutoHeight": true, "Padding": [2, 5, 2, 5], "SSeparator": { "Thickness": 1 } },
+                {
+                    "AutoHeight": true, "Padding": [10, 10, 10, 5],
+                    "STextBlock": { "Text": "选择一个镜头并应用", "Font": { "Style": "FEditorStyle", "StyleName": "ContentBrowser.SourceTree.FolderFont" } }
+                },
+                {
+                    "FillHeight": 1.0, "Padding": [10, 0, 10, 10],
+                    "SOverlay": {
+                        "Slots": [
+                            {
+                                "SScrollBox": {
+                                    "Aka": "default_display_panel",
+                                    "Visibility": "Visible",
+                                    "Slots": [
+                                       {
+                                            "SVerticalBox": {
+                                                "Aka": "image_grid",
+                                                "Slots": [
+                                                    {"AutoHeight": true,"SHorizontalBox":{"Slots": [
+                                                        { "SBox": { "Aka": "image_slot_0", "Visibility": "Collapsed", "Padding": [5,5], "Content": { "SVerticalBox": { "Slots": [ { "SImage": { "Aka": "image_0", "DesiredSizeOverride": [256, 256] } }, { "AutoHeight": true, "Padding": [0,2,0,0], "SButton": { "Text": "应用此镜头", "OnClick": "generator.apply_shot(0)" } } ] } } } },
+                                                        { "SBox": { "Aka": "image_slot_1", "Visibility": "Collapsed", "Padding": [5,5], "Content": { "SVerticalBox": { "Slots": [ { "SImage": { "Aka": "image_1", "DesiredSizeOverride": [256, 256] } }, { "AutoHeight": true, "Padding": [0,2,0,0], "SButton": { "Text": "应用此镜头", "OnClick": "generator.apply_shot(1)" } } ] } } } }
+                                                    ]}},
+                                                    {"AutoHeight": true,"SHorizontalBox":{"Slots": [
+                                                        { "SBox": { "Aka": "image_slot_2", "Visibility": "Collapsed", "Padding": [5,5], "Content": { "SVerticalBox": { "Slots": [ { "SImage": { "Aka": "image_2", "DesiredSizeOverride": [256, 256] } }, { "AutoHeight": true, "Padding": [0,2,0,0], "SButton": { "Text": "应用此镜头", "OnClick": "generator.apply_shot(2)" } } ] } } } },
+                                                        { "SBox": { "Aka": "image_slot_3", "Visibility": "Collapsed", "Padding": [5,5], "Content": { "SVerticalBox": { "Slots": [ { "SImage": { "Aka": "image_3", "DesiredSizeOverride": [256, 256] } }, { "AutoHeight": true, "Padding": [0,2,0,0], "SButton": { "Text": "应用此镜头", "OnClick": "generator.apply_shot(3)" } } ] } } } }
+                                                    ]}},
+                                                    {"AutoHeight": true,"SHorizontalBox":{"Slots": [
+                                                        { "SBox": { "Aka": "image_slot_4", "Visibility": "Collapsed", "Padding": [5,5], "Content": { "SVerticalBox": { "Slots": [ { "SImage": { "Aka": "image_4", "DesiredSizeOverride": [256, 256] } }, { "AutoHeight": true, "Padding": [0,2,0,0], "SButton": { "Text": "应用此镜头", "OnClick": "generator.apply_shot(4)" } } ] } } } },
+                                                        { "SBox": { "Aka": "image_slot_5", "Visibility": "Collapsed", "Padding": [5,5], "Content": { "SVerticalBox": { "Slots": [ { "SImage": { "Aka": "image_5", "DesiredSizeOverride": [256, 256] } }, { "AutoHeight": true, "Padding": [0,2,0,0], "SButton": { "Text": "应用此镜头", "OnClick": "generator.apply_shot(5)" } } ] } } } }
+                                                    ]}}
+                                                ]
+                                            }
+                                       }
+                                    ]
+                                }
+                            },
+                            {
+                                "SHorizontalBox": {
+                                    "Aka": "canny_display_panel",
+                                    "Visibility": "Collapsed",
+                                    "Slots": [
+                                        { "FillWidth": 1.0, "HAlign": "Center", "Padding": [5,5], "SVerticalBox": { "Slots": [ {"AutoHeight": true, "STextBlock": { "Text": "输入边缘图" } }, { "SImage": { "Aka": "canny_input_image", "DesiredSizeOverride": [256, 256] } } ] } },
+                                        { "FillWidth": 1.0, "HAlign": "Center", "Padding": [5,5], "SVerticalBox": { "Slots": [ {"AutoHeight": true, "STextBlock": { "Text": "生成结果" } }, { "SImage": { "Aka": "canny_output_image", "DesiredSizeOverride": [256, 256] } }, { "AutoHeight": true, "Padding": [0,2,0,0], "SButton": { "Text": "应用此镜头", "OnClick": "generator.apply_shot(0)" } } ] } }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "AutoHeight": true, "Padding": [10, 10, 10, 10],
+                    "SHorizontalBox": {
+                        "Slots": [
+                            { "VAlign": "Center", "FillWidth": 1.0, "STextBlock": { "Aka": "status_text", "Text": "状态: 等待操作" } },
+                            { "AutoWidth": true, "SThrobber": { "Aka": "loading_throbber", "Visibility": "Collapsed" } }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

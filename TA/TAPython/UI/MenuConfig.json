@@ -1,0 +1,15 @@
+{
+    "OnToolBarChameleon": {
+        "name": "Python Chameleon on toolbar",
+        "items": [
+            {
+                "name": "Shot Replicator",
+                "ChameleonTools": "../Python/Main_UI/ui.json",
+                "icon": {
+                    "style": "ChameleonStyle",
+                    "name": "Lab"
+                }
+            }
+        ]
+    }
+}
